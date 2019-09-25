@@ -195,8 +195,9 @@
       } ;
 
   // Core recursive DOM-building function
-    function getKvovDOM(value, keyName, url_reel) {
+    function getKvovDOM(value, keyName, url_reel, parent) {
       var is_reel_id = (url_reel != null && keyName == 'id');
+      var is_reel_status_code = (url_reel != null && keyName == 'status_code');
       var type,
           kvov,
           nonZeroSize,
@@ -280,6 +281,9 @@
               }
               else {
                 innerStringEl.innerText = escapedString ;
+                if(is_reel_status_code && escapedString != '200'){
+                  parent.querySelector('span.kvov.objProp').querySelector('span.s').style.color = 'red'
+                }
               }
               valueElement = templates.t_string.cloneNode(false) ;
               valueElement.appendChild(templates.t_dblqText.cloneNode(false)) ;
@@ -309,7 +313,7 @@
                   for (k in value) {
                     if (value.hasOwnProperty(k)) {
                       count++ ;
-                      childKvov =  getKvovDOM(value[k], k, url_reel) ;
+                      childKvov =  getKvovDOM(value[k], k, url_reel, blockInner) ;
                       // Add comma
                         comma = templates.t_commaText.cloneNode() ;
                         childKvov.appendChild(comma) ;
@@ -338,7 +342,7 @@
                 // For each key/value pair, add the markup
                   for (var i=0, length=value.length, lastIndex=length-1; i<length; i++) {
                     // Make a new kvov, with no key
-                      childKvov = getKvovDOM(value[i], false, url_reel) ;
+                      childKvov = getKvovDOM(value[i], false, url_reel, blockInner) ;
                     // Add comma if not last one
                       if (i < lastIndex)
                         childKvov.appendChild( templates.t_commaText.cloneNode() ) ;
@@ -383,7 +387,7 @@
       // spin(5) ;
 
       // Format object (using recursive kvov builder)
-        var rootKvov = getKvovDOM(obj, false, url) ;
+        var rootKvov = getKvovDOM(obj, false, url, null) ;
 
       // The whole DOM is now built.
 
