@@ -197,7 +197,7 @@
               var script = document.createElement("script") ;
               script.innerHTML = 'window.json = ' + msg[2] + ';' ;
               document.head.appendChild(script) ;
-              console.log('JSON Formatter: Type "json" to inspect.') ;
+              console.log('JSON Formatter (A Reel): Type "json" to inspect.') ;
             }, 100) ;
 
           break ;
@@ -252,7 +252,8 @@
             port.postMessage({
               type: "SENDING TEXT",
               text: pre.innerText,
-              length: jsonLength
+              length: jsonLength,
+              url: window.location.href
             });
         
           // Now, this script will just wait to receive anything back via another port message. The returned message will be something like "NOT JSON" or "IS JSON"

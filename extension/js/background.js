@@ -195,7 +195,8 @@
       } ;
 
   // Core recursive DOM-building function
-    function getKvovDOM(value, keyName) {
+    function getKvovDOM(value, keyName, url_reel) {
+      var is_reel_id = (url_reel != null && keyName == 'id');
       var type,
           kvov,
           nonZeroSize,
@@ -263,7 +264,15 @@
                   escapedString = JSON.stringify(value)
               ;
               escapedString = escapedString.substring(1, escapedString.length-1) ; // remove quotes
-              if (value[0] === 'h' && value.substring(0, 4) === 'http') { // crude but fast - some false positives, but rare, and UX doesn't suffer terribly from them.
+              if(is_reel_id){
+                var innerStringA = document.createElement('A') ;
+                innerStringA.href = url_reel.replace('{ID}', value)
+                innerStringA.innerText = escapedString ;
+                innerStringA.setAttribute("target", "_blank");
+                innerStringA.className = 'nl'
+                innerStringEl.appendChild(innerStringA) ;
+              }
+              else if (value[0] === 'h' && value.substring(0, 4) === 'http') { // crude but fast - some false positives, but rare, and UX doesn't suffer terribly from them.
                 var innerStringA = document.createElement('A') ;
                 innerStringA.href = value ;
                 innerStringA.innerText = escapedString ;
@@ -300,7 +309,7 @@
                   for (k in value) {
                     if (value.hasOwnProperty(k)) {
                       count++ ;
-                      childKvov =  getKvovDOM(value[k], k) ;
+                      childKvov =  getKvovDOM(value[k], k, url_reel) ;
                       // Add comma
                         comma = templates.t_commaText.cloneNode() ;
                         childKvov.appendChild(comma) ;
@@ -329,7 +338,7 @@
                 // For each key/value pair, add the markup
                   for (var i=0, length=value.length, lastIndex=length-1; i<length; i++) {
                     // Make a new kvov, with no key
-                      childKvov = getKvovDOM(value[i], false) ;
+                      childKvov = getKvovDOM(value[i], false, url_reel) ;
                     // Add comma if not last one
                       if (i < lastIndex)
                         childKvov.appendChild( templates.t_commaText.cloneNode() ) ;
@@ -362,12 +371,19 @@
 
 
   // Function to convert object to an HTML string
-    function jsonObjToHTML(obj, jsonpFunctionName) {
+    function jsonObjToHTML(obj, jsonpFunctionName, url) {
+      // is reel?
+      if(!url.includes('proxy') || !url.includes('reel') || !url.includes('/trackings')){
+        url = null;
+      } else{
+        console.log('JSON Formatter (A Reel): Adding clickeable reel IDs.');
+        url = 'http://proxy.despexds.net/' + url.split('/')[3] + '/trackings/{ID}/payload';
+      }
 
       // spin(5) ;
 
       // Format object (using recursive kvov builder)
-        var rootKvov = getKvovDOM(obj, false) ;
+        var rootKvov = getKvovDOM(obj, false, url) ;
 
       // The whole DOM is now built.
 
@@ -487,7 +503,7 @@
               port.postMessage(['FORMATTING' /*, JSON.stringify(localStorage)*/]) ;
 
             // Do formatting
-              var html = jsonObjToHTML(obj, jsonpFunctionName) ;
+              var html = jsonObjToHTML(obj, jsonpFunctionName, msg.url) ;
 
             // Post the HTML string to the content script
               port.postMessage(['FORMATTED', html, validJsonText]) ;

@@ -1,9 +1,9 @@
 {
-  "name": "JSON Formatter",
-  "version": "0.6.0",
+  "name": "JSON Formatter A Reel",
+  "version": "0.0.1",
   "manifest_version": 2,
-  "description": "Makes JSON easy to read. Open source.",
-  "homepage_url": "https://github.com/callumlocke/json-formatter",
+  "description": "Makes JSON easy to read. Open source. Add clickeable Reel IDs",
+  "homepage_url": "https://github.com/despegar/json-formatter-a-reel",
   "minimum_chrome_version": "21",
   "icons": {
        "128": "icons/128.png",
@@ -15,5 +15,5 @@
   "content_scripts": [
     { "matches": ["<all_urls>"], "js": ["js/content.js"], "run_at": "document_start" }
   ],
-  "permissions":["*://*/*", "<all_urls>"]
+  "permissions":["*://*/*", "<all_urls>", "tabs"]
 }
