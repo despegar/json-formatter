@@ -1,4 +1,4 @@
-JSON Formatter
+JSON Formatter (A Reel)
 ==============
 
 Chrome extension for printing JSON and JSONP nicely when you visit it 'directly' in a browser tab.
@@ -21,9 +21,9 @@ A background worker is used to prevent the UI freezing when processing very long
 Installation
 ------------
 
-**Option 1** – just install it from the [Chrome Web Store](https://chrome.google.com/webstore/detail/bcjindcccaagfpapjjmafapmmgkkhgoa).
+**Option 1** – just install it from the [NONE].
 
-**Option 2** – install it from source:
+**Option 2** – install it from source (use this option):
 
 * clone/download this repo,
 * open Chrome and go to `chrome://chrome/extensions/`,
