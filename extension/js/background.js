@@ -289,6 +289,10 @@
               valueElement.appendChild(templates.t_dblqText.cloneNode(false)) ;
               valueElement.appendChild(innerStringEl) ;
               valueElement.appendChild(templates.t_dblqText.cloneNode(false)) ;
+
+              if(is_reel_status_code){
+                valueElement.style.color = 'red'
+              }
               kvov.appendChild(valueElement) ;
             break ;
           
