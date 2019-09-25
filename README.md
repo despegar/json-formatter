@@ -21,7 +21,7 @@ A background worker is used to prevent the UI freezing when processing very long
 Installation
 ------------
 
-**Option 1** – just install it from the [Chrome Web Store](https://chrome.google.com/webstore/detail/bcjindcccaagfpapjjmafapmmgkkhgoa).
+**Option 1** – just install it from the [NONE].
 
 **Option 2** – install it from source:
 
