@@ -12,6 +12,7 @@ Features
 * Syntax highlighting
 * Collapsible trees, with indent guides
 * Clickable URLs
+* Clickable reel payload IDs
 * Buttons for switching between raw and parsed JSON
 * Parsed JSON is exported as a global variable, `json`, so you can inspect it in the console
 
