@@ -198,6 +198,8 @@
     function getKvovDOM(value, keyName, url_reel, parent) {
       var is_reel_id = (url_reel != null && keyName == 'id');
       var is_reel_status_code = (url_reel != null && keyName == 'status_code');
+      var is_reel_paging = (url_reel != null && keyName == 'scroll_id');
+      
       var status_code_error = false;
       var type,
           kvov,
@@ -279,6 +281,8 @@
                 innerStringA.href = value ;
                 innerStringA.innerText = escapedString ;
                 innerStringEl.appendChild(innerStringA) ;
+              } else if(is_reel_paging){
+                innerStringEl.innerText = 'TRUNCATED...' ;
               }
               else {
                 innerStringEl.innerText = escapedString ;
